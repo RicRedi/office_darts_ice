@@ -35,6 +35,25 @@ Pokud ano a appka pořád nic nezobrazuje, zkontroluj přímo v Realtime
 Database → Data, jestli jsou data na správné cestě (`/players`, ne
 zanořené o úroveň víc omylem, viz další bod).
 
+## Appka lokálně (`npm run dev`) funguje, ale na GitHub Pages je úplně bílá prázdná stránka
+
+Skoro jistě špatný `base` path — appka se ho drží jen na dvě místa:
+`vite.config.js` (`VITE_BASE_PATH` fallback) a `.github/workflows/deploy.yml`
+(env proměnná ve stejném názvu). Pokud neodpovídají skutečnému názvu
+repozitáře, prohlížeč se snaží stáhnout JS/CSS z neexistující cesty (404),
+appka se nikdy nespustí a zůstane jen prázdné `<div id="root"></div>` —
+žádná chybová hláška v appce samotné, jen bílá stránka.
+
+**Jak to poznat:** otevři `view-source:` na nasazené URL (nebo DevTools →
+Elements) a zkontroluj `src`/`href` u `<script>`/`<link>` tagů v `<head>` —
+pokud tam je jiná cesta než skutečný název repozitáře (např.
+`/dartstats/assets/...` na repu jménem `office_darts_ice`), je to tohle.
+Lokální `npm run dev` na to nereaguje, protože Vite dev server `base` pro
+lokální servírování ignoruje — chyba se projeví až v produkčním buildu.
+
+**Oprava:** uprav `VITE_BASE_PATH` na obou místech na `/SKUTEČNÝ_NÁZEV_REPA/`
+(viz [`deployment.md`](deployment.md)) a pushni znovu.
+
 ## V konzoli u nějakého uzlu (např. `admins`) nejde přidat `+` podřazený uzel
 
 Uzel se pravděpodobně vytvořil jako **string leaf** (hodnota `""` nebo

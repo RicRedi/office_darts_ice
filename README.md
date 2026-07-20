@@ -58,9 +58,9 @@ npm install
 npm run dev
 ```
 
-Vite vypíše lokální URL (typicky `http://localhost:5173/dartstats/` — cesta
-`/dartstats/` je tam schválně, viz `VITE_BASE_PATH` níže). Otevři ji
-v prohlížeči, zadej PIN a appka by měla naběhnout.
+Vite vypíše lokální URL (typicky `http://localhost:5173/office_darts_ice/` —
+cesta `/office_darts_ice/` je tam schválně, viz `VITE_BASE_PATH` níže).
+Otevři ji v prohlížeči, zadej PIN a appka by měla naběhnout.
 
 ### 1.5 Nahrání Security Rules
 
@@ -113,11 +113,14 @@ npm run build      # produkční build do dist/
    `VITE_FIREBASE_DATABASE_URL`, `VITE_FIREBASE_PROJECT_ID`,
    `VITE_FIREBASE_APP_ID`, volitelně `VITE_EMAILJS_*`.
 3. Firebase konzole → **Authentication → Settings → Authorized domains** →
-   přidej `USERNAME.github.io`.
+   přidej `ricredi.github.io`.
 4. Push do `main` appku nasadí automaticky (`.github/workflows/deploy.yml`).
-   Po prvním běhu poběží na `https://USERNAME.github.io/dartstats/`.
-5. **Pokud se repozitář nejmenuje `dartstats`**, uprav `VITE_BASE_PATH`
-   v `.github/workflows/deploy.yml` na `/NÁZEV_REPOZITÁŘE/`.
+   Po prvním běhu poběží na `https://ricredi.github.io/office_darts_ice/`.
+5. `VITE_BASE_PATH` v `.github/workflows/deploy.yml` (a výchozí hodnota ve
+   `vite.config.js`) je už nastavená na `/office_darts_ice/`, ať sedí se
+   skutečným názvem tohoto repozitáře. Pokud repo v budoucnu přejmenuješ
+   nebo forkneš pod jiným názvem, uprav ji na `/NÁZEV_REPOZITÁŘE/` na obou
+   místech.
 
 ---
 

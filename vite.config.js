@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.VITE_BASE_PATH || '/dartstats/',
+  base: process.env.VITE_BASE_PATH || '/office_darts_ice/',
   plugins: [react(), tailwindcss()],
   test: {
     environment: 'node',

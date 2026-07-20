@@ -23,24 +23,28 @@ GitHub Pages servíruje statický web z `https://USERNAME.github.io/NAZEV_REPA/`
 — appka tedy neběží na kořeni domény, ale v podsložce. To se musí promítnout
 na třech místech, jinak se buď nenačtou assety, nebo nefunguje routing:
 
-- **`vite.config.js`**: `base: process.env.VITE_BASE_PATH || '/dartstats/'`
+- **`vite.config.js`**: `base: process.env.VITE_BASE_PATH || '/office_darts_ice/'`
   — ovlivňuje, s jakou cestou se generují odkazy na JS/CSS bundly v buildu.
 - **`main.jsx`**: `<BrowserRouter basename={import.meta.env.BASE_URL}>` —
   Vite automaticky naplní `BASE_URL` hodnotou z `base` výše, není potřeba to
   duplikovat ručně. Díky tomu React Router ví, že `/history` ve skutečnosti
-  znamená `/dartstats/history`.
-- **`.github/workflows/deploy.yml`**: `VITE_BASE_PATH: /dartstats/` v env
-  buildovacího kroku.
+  znamená `/office_darts_ice/history`.
+- **`.github/workflows/deploy.yml`**: `VITE_BASE_PATH: /office_darts_ice/` v
+  env buildovacího kroku.
 
-**Pokud se repozitář nejmenuje `dartstats`**, uprav tenhle řádek ve workflow
-souboru na `/NÁZEV_REPOZITÁŘE/`. Lokální `npm run dev` na tohle nastavení
-nereaguje (Vite dev server `base` pro lokální servírování ignoruje), takže
-se to neprojeví, dokud neuděláš produkční build.
+Obě hodnoty (`vite.config.js` i workflow) musí odpovídat **skutečnému
+názvu repozitáře** — jsou teď nastavené na `office_darts_ice`. Pokud repo
+přejmenuješ nebo appku nasadíš z forku pod jiným názvem, uprav obě místa na
+`/NOVÝ_NÁZEV/`. Lokální `npm run dev` na tohle nastavení nereaguje (Vite dev
+server `base` pro lokální servírování ignoruje), takže chybu neodhalíš, dokud
+neuděláš produkční build (přesně tenhle scénář nás dostal — lokálně vše
+fungovalo, na GitHub Pages byla bílá prázdná stránka, viz
+[`troubleshooting.md`](troubleshooting.md)).
 
 ## SPA fallback (`404.html`)
 
 GitHub Pages neumí server-side rewrite pro SPA routing — obnovení stránky na
-`/dartstats/history` by bez tohohle kroku vrátilo `404`. Trik: zkopírovat
+`/office_darts_ice/history` by bez tohohle kroku vrátilo `404`. Trik: zkopírovat
 `index.html` jako `404.html` do buildu. GitHub Pages při neznámé cestě
 servíruje `404.html`, což se u SPA chová jako fallback na `index.html` —
 prohlížeč dostane appku, ta se nastartuje a React Router si podle URL sám
@@ -57,6 +61,6 @@ a není potřeba prohledávat `package.json`, aby ses dozvěděl, že se něco d
    odpovídat proměnným použitým ve workflow (`VITE_APP_PIN`,
    `VITE_FIREBASE_*`, volitelně `VITE_EMAILJS_*`).
 3. **Firebase → Authentication → Settings → Authorized domains** → přidat
-   `USERNAME.github.io`. Bez tohohle kroku přihlašování (anonymní i admin)
+   `ricredi.github.io`. Bez tohohle kroku přihlašování (anonymní i admin)
    z nasazené appky spadne na doménovou/CORS chybu, i když lokálně vše
    funguje — Firebase Auth kontroluje, ze které domény request přichází.
