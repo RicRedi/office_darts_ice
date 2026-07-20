@@ -1,0 +1,28 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    "game_types": {
+      ".write": "root.child('admins').child(auth.uid).exists()"
+    },
+    "players": {
+      ".write": "auth != null",
+      ".indexOn": ["elo", "is_guest", "is_archived", "last_played_timestamp"]
+    },
+    "matches": {
+      ".indexOn": ["timestamp", "game_type_id"],
+      "$match_id": {
+        ".write": "auth != null && (!data.exists() || root.child('admins').child(auth.uid).exists() || (data.exists() && data.child('editable_until').val() > now))"
+      }
+    },
+    "deletion_requests": {
+      ".write": "auth != null"
+    },
+    "app_meta": {
+      ".write": "auth != null"
+    },
+    "admins": {
+      ".read": "auth != null",
+      ".write": false
+    }
+  }
+}
