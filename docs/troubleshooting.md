@@ -48,8 +48,15 @@ appka se nikdy nespustí a zůstane jen prázdné `<div id="root"></div>` —
 Elements) a zkontroluj `src`/`href` u `<script>`/`<link>` tagů v `<head>` —
 pokud tam je jiná cesta než skutečný název repozitáře (např.
 `/dartstats/assets/...` na repu jménem `office_darts_ice`), je to tohle.
-Lokální `npm run dev` na to nereaguje, protože Vite dev server `base` pro
-lokální servírování ignoruje — chyba se projeví až v produkčním buildu.
+
+**Pozor:** Vite dev server `base` cestu ve skutečnosti respektuje stejně
+jako produkční build (na rozdíl od dřívějšího nesprávného předpokladu v téhle
+dokumentaci) — po změně `VITE_BASE_PATH` se lokální URL appky posune (např.
+z `http://localhost:5173/dartstats/` na `http://localhost:5173/office_darts_ice/`).
+Pokud po změně `base` cesty najednou "nefunguje ani localhost", zkontroluj,
+jestli nezkoušíš starou zabookmarkovanou adresu — Vite navíc při změně
+`.env` dev server sám restartuje, takže stačí počkat pár vteřin a otevřít
+novou cestu.
 
 **Oprava:** uprav `VITE_BASE_PATH` na obou místech na `/SKUTEČNÝ_NÁZEV_REPA/`
 (viz [`deployment.md`](deployment.md)) a pushni znovu.

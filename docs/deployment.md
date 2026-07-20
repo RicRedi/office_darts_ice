@@ -35,11 +35,13 @@ na třech místech, jinak se buď nenačtou assety, nebo nefunguje routing:
 Obě hodnoty (`vite.config.js` i workflow) musí odpovídat **skutečnému
 názvu repozitáře** — jsou teď nastavené na `office_darts_ice`. Pokud repo
 přejmenuješ nebo appku nasadíš z forku pod jiným názvem, uprav obě místa na
-`/NOVÝ_NÁZEV/`. Lokální `npm run dev` na tohle nastavení nereaguje (Vite dev
-server `base` pro lokální servírování ignoruje), takže chybu neodhalíš, dokud
-neuděláš produkční build (přesně tenhle scénář nás dostal — lokálně vše
-fungovalo, na GitHub Pages byla bílá prázdná stránka, viz
-[`troubleshooting.md`](troubleshooting.md)).
+`/NOVÝ_NÁZEV/`. Vite dev server `base` cestu respektuje i lokálně (ověřeno
+— po změně `VITE_BASE_PATH` se posune i lokální URL, viz
+[`troubleshooting.md`](troubleshooting.md)), takže rozjetá appka na
+`localhost` sama o sobě negarantuje, že `base` sedí i pro GitHub Pages —
+ověř si i skutečný build (`npm run build` + kontrola `dist/index.html`),
+přesně tenhle scénář nás jednou dostal (lokálně fungovalo, na GitHub Pages
+byla bílá prázdná stránka).
 
 ## SPA fallback (`404.html`)
 
