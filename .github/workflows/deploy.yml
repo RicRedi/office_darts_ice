@@ -24,6 +24,14 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm test
+      - name: "DEBUG: check which secrets are actually set (values never printed)"
+        run: |
+          echo "VITE_APP_PIN present: ${{ secrets.VITE_APP_PIN != '' }}"
+          echo "VITE_FIREBASE_API_KEY present: ${{ secrets.VITE_FIREBASE_API_KEY != '' }}"
+          echo "VITE_FIREBASE_AUTH_DOMAIN present: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN != '' }}"
+          echo "VITE_FIREBASE_DATABASE_URL present: ${{ secrets.VITE_FIREBASE_DATABASE_URL != '' }}"
+          echo "VITE_FIREBASE_PROJECT_ID present: ${{ secrets.VITE_FIREBASE_PROJECT_ID != '' }}"
+          echo "VITE_FIREBASE_APP_ID present: ${{ secrets.VITE_FIREBASE_APP_ID != '' }}"
       - run: npm run build
         env:
           VITE_BASE_PATH: /office_darts_ice/
